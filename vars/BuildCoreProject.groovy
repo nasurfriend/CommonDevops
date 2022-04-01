@@ -8,16 +8,20 @@ def call(Map config) {
 		stages {
 		  
 			  stage("Print Map Variable") {
-				echo config.variable1
-				echo config.varaible2
-				echo config.varaible3
+				  steps{
+				  	echo config.variable1
+					echo config.varaible2
+					echo config.varaible3
+				  }
+				
 			  }
 			  stage("Clean Workspace") {
 				sh "rm -rf *"
 			  }
 		  
 		  stage("Pull from repository"){
-			  withCredentials([usernamePassword(credentialsId: "nexus", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+			  steps{
+						withCredentials([usernamePassword(credentialsId: "nexus", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 							statusCode=sh(script: "curl --write-out '%{http_code}' -s -o /dev/null -u $Username:$Password -v -X GET '${REPO_URL}'", returnStdout: true).trim().tokenize("\n")
 							echo "HTTP response status code: $statusCode"
 						}
@@ -34,6 +38,7 @@ def call(Map config) {
 							currentBuild.result = 'ABORTED'
 							error('Apps Not Found')
 						}
+			  }
 		  }
 		  
 		}

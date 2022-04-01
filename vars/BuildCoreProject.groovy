@@ -13,7 +13,7 @@ def call(Map config) {
 				echo config.varaible3
 			  }
 			  stage("Clean Workspace") {
-				rm -rf *
+				rm -rf "*"
 			  }
 		  
 		  stage("Pull from repository"){

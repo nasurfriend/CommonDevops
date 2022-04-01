@@ -16,7 +16,9 @@ def call(Map config) {
 				
 			  }
 			  stage("Clean Workspace") {
-				sh "rm -rf *"
+				  steps{
+					sh "rm -rf *"
+				  }
 			  }
 		  
 		  stage("Pull from repository"){
